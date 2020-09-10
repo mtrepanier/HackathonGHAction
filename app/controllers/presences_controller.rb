@@ -1,5 +1,6 @@
 class PresencesController < ApplicationController
   before_action :set_presence, only: [:show, :edit, :update, :destroy]
+  http_basic_authenticate_with name: "ahmldm", password: "fnq6aMuQZLR4Rgm6", except: [:new, :create]
 
   # GET /presences
   # GET /presences.json
@@ -28,7 +29,7 @@ class PresencesController < ApplicationController
 
     respond_to do |format|
       if @presence.save
-        format.html { redirect_to @presence, notice: 'Presence was successfully created.' }
+        format.html { redirect_to confirmation_presences_url, notice: 'Presence was successfully created.' }
         format.json { render :show, status: :created, location: @presence }
       else
         format.html { render :new }
@@ -59,6 +60,9 @@ class PresencesController < ApplicationController
       format.html { redirect_to presences_url, notice: 'Presence was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def confirmation
   end
 
   private

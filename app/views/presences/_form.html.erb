@@ -1,7 +1,7 @@
 <%= form_with(model: presence, local: true) do |form| %>
   <% if presence.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(presence.errors.count, "error") %> prohibited this presence from being saved:</h2>
+    <div id="error_explanation" class='invalid-feedback d-block'>
+      <h2><%= pluralize(presence.errors.count, "erreur") %> empeche la sauvegarde:</h2>
 
       <ul>
         <% presence.errors.full_messages.each do |message| %>
@@ -11,47 +11,55 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <label for='name'>Confirmation de la présence du joueur/bénévole (Nom, Prénom) <font color=red>*</font></label><br/>
+    <small class="form-text text-muted">Doit remplir un autre questionnaire si vous êtes bénévole en plus de votre enfants</small>
+    <%= form.text_field :name, :class => 'form-control', required: true%>
   </div>
 
-  <div class="field">
-    <%= form.label :attendant %>
-    <%= form.text_field :attendant %>
+  <div class="form-group">
+    <label for='attendant'>Accompagnateur (Nom, Prénom)</label>
+    <%= form.text_field :attendant, :class => 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :phone_number %>
-    <%= form.text_field :phone_number %>
+  <div class="form-group">
+    <label for='phone_number'>Numéro de téléphone <font color=red>*</font></label>
+    <%= form.text_field :phone_number, :class => 'form-control', required: true %>
   </div>
 
-  <div class="field">
-    <%= form.label :arena %>
-    <%= form.text_field :arena %>
+  <div class="form-group">
+    <label for='arena'>A qu'elle arena êtes-vous? <font color=red>*</font></label>
+    <%= form.select(:arena, ['Olympia', 'Complexe AP'], {}, { :class => 'form-control' })%>
   </div>
 
-  <div class="field">
-    <%= form.label :question1 %>
-    <%= form.text_field :question1 %>
+  <div class="form-group">
+    <label for='question1'>1-PRÉSENTEZ-VOUS UN DES SYMPTÔMES SUIVANTS: <font color=red>*</font></label><br/>
+    <small class="form-text text-muted">Fièvre ou frissons, Apparition ou aggravation de toux, Perte de l'odorat ou du goût, Maux de gorge ou voix enrouée, Essoufflement ou difficulté respiratoire, Symptômes gastro-intestinaux (douleur abdominale, diarrhée vomissements.</small>
+    <%= form.select(:question1, ['','OUI', 'NON'], {}, { :class => 'form-control' })%>
   </div>
 
-  <div class="field">
-    <%= form.label :question2 %>
-    <%= form.text_field :question2 %>
+  <div class="form-group">
+    <label for='question2'>2-PRÉSENTEZ -VOUS DEUX (OU PLUS) DES SYMPTÔMES SUIVANTS: <font color=red>*</font></label><br/>
+    <small class="form-text text-muted">Écoulements nasaux, Douleurs musculaires ou courbatures, Fatigue intense, Conjonctivite, Maux de tête, Nausée, perte d’appétit.</small>
+    <%= form.select(:question2, ['','OUI', 'NON'], {}, { :class => 'form-control' })%>
   </div>
 
-  <div class="field">
-    <%= form.label :question3 %>
-    <%= form.text_field :question3 %>
+  <div class="form-group">
+    <label for='question3'>3-AVEZ-VOUS VOYAGÉ À L’ÉTRANGER (Y COMPRIS AUX ÉTATS-UNIS) OU EU UN CONTACT AVEC UNE PERSONNE QUI A VOYAGÉ AU COURS DES 14 DERNIERS JOURS? <font color=red>*</font></label>
+    <%= form.select(:question3, ['','OUI', 'NON'], {}, { :class => 'form-control' })%>
   </div>
 
-  <div class="field">
-    <%= form.label :question4 %>
-    <%= form.text_field :question4 %>
+  <div class="form-group">
+    <label for='question4'>4-AU COURS DES 14 DERNIERS JOURS, AVEZ-VOUS FOURNI DES SOINS OU EU UN CONTACT AVEC UN CAS SYMPTOMATIQUE CONFIRMÉ OU SUSPECTÉ (EN ATTENTE D’UN RÉSULTAT) DE LA COVID-19? <font color=red>*</font></label>
+    <%= form.select(:question4, ['','OUI', 'NON'], {}, { :class => 'form-control' })%>
   </div>
-
+  <p>SI VOUS RÉPONDEZ OUI À L’UNE DE CES QUESTIONS, VEUILLEZ PAR MESURE PRÉVENTIVE:</p>
+  <ul>
+    <li>Ne pas vous présenter à l’aréna</li>
+    <li>Demeurer à la maison et communiquer avec la ligne 1-877-644-4545.</li>
+  </ul>
+  <br/>
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Confirmer ma presence", :class => "btn btn-primary" %>
   </div>
 <% end %>
