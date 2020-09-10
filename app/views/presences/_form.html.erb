@@ -1,7 +1,7 @@
 <%= form_with(model: presence, local: true) do |form| %>
   <% if presence.errors.any? %>
     <div id="error_explanation" class='invalid-feedback d-block'>
-      <h2><%= pluralize(presence.errors.count, "erreur") %> empeche la sauvegarde:</h2>
+      <h2><%= pluralize(presence.errors.count, "erreur") %> empêche la sauvegarde:</h2>
 
       <ul>
         <% presence.errors.full_messages.each do |message| %>
