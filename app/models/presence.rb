@@ -1,0 +1,2 @@
+class Presence < ApplicationRecord
+end

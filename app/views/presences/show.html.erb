@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @presence.name %>
+</p>
+
+<p>
+  <strong>Attendant:</strong>
+  <%= @presence.attendant %>
+</p>
+
+<p>
+  <strong>Phone number:</strong>
+  <%= @presence.phone_number %>
+</p>
+
+<p>
+  <strong>Arena:</strong>
+  <%= @presence.arena %>
+</p>
+
+<p>
+  <strong>Question1:</strong>
+  <%= @presence.question1 %>
+</p>
+
+<p>
+  <strong>Question2:</strong>
+  <%= @presence.question2 %>
+</p>
+
+<p>
+  <strong>Question3:</strong>
+  <%= @presence.question3 %>
+</p>
+
+<p>
+  <strong>Question4:</strong>
+  <%= @presence.question4 %>
+</p>
+
+<%= link_to 'Edit', edit_presence_path(@presence) %> |
+<%= link_to 'Back', presences_path %>

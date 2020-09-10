@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Presences</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Attendant</th>
+      <th>Phone number</th>
+      <th>Arena</th>
+      <th>Question1</th>
+      <th>Question2</th>
+      <th>Question3</th>
+      <th>Question4</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @presences.each do |presence| %>
+      <tr>
+        <td><%= presence.name %></td>
+        <td><%= presence.attendant %></td>
+        <td><%= presence.phone_number %></td>
+        <td><%= presence.arena %></td>
+        <td><%= presence.question1 %></td>
+        <td><%= presence.question2 %></td>
+        <td><%= presence.question3 %></td>
+        <td><%= presence.question4 %></td>
+        <td><%= link_to 'Show', presence %></td>
+        <td><%= link_to 'Edit', edit_presence_path(presence) %></td>
+        <td><%= link_to 'Destroy', presence, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Presence', new_presence_path %>
