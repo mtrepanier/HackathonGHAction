@@ -1,6 +1,6 @@
 class PresencesController < ApplicationController
   before_action :set_presence, only: [:show, :edit, :update, :destroy]
-  http_basic_authenticate_with name: "ahmldm", password: "fnq6aMuQZLR4Rgm6", except: [:new, :create]
+  http_basic_authenticate_with name: "ahmldm", password: "fnq6aMuQZLR4Rgm6", except: [:new, :create, :confirmation]
 
   # GET /presences
   # GET /presences.json
