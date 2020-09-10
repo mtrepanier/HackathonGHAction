@@ -1,4 +1,13 @@
 <h1>AHMLDM - Présence COVID</h1>
 <p>Présences et formulaire COVID pour les Panthères du Lac des Deux-Montagnes</p>
 <%= render 'form', presence: @presence %>
+<script type="text/javascript">
+  $( document ).ready(function() {
+    // returns '#input' for 'https://www.techiedelight.com/#input'
+    var hash = $(location).prop('hash').substring(1);;
+    if ($("#presence_arena option[value="+hash+"]").length > 0) {
+      $("#presence_arena").val(hash);
+    }
+  });
+</script>
 

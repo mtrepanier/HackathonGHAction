@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :presences do 
     collection do
       get :confirmation
+      get :export
     end
   end
 

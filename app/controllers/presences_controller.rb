@@ -1,3 +1,5 @@
+require 'csv'
+
 class PresencesController < ApplicationController
   before_action :set_presence, only: [:show, :edit, :update, :destroy]
   http_basic_authenticate_with name: "ahmldm", password: "fnq6aMuQZLR4Rgm6", except: [:new, :create, :confirmation]
@@ -6,6 +8,9 @@ class PresencesController < ApplicationController
   # GET /presences.json
   def index
     @presences = Presence.all
+    days = @presences.map {|i| i.created_at.to_date }
+
+    @days = days.uniq
   end
 
   # GET /presences/1
@@ -63,6 +68,22 @@ class PresencesController < ApplicationController
   end
 
   def confirmation
+  end
+
+  def export
+    date = params[:selectdate]
+    start_date = DateTime.parse(date).beginning_of_day
+    end_date = DateTime.parse(date).end_of_day
+    presences = Presence.where(:created_at => start_date..end_date)
+    csv_data = CSV.generate(headers: true) do |csv|
+      csv << ["Date", "Nom joueur/benevole", "Accompagnateur", "Telephone", "Arena", "Question 1", "Question 2", "Question 3", "Question 4"]
+
+      presences.each do |p|
+        csv << [I18n.l(p.created_at.in_time_zone("America/New_York"),format: :long), p.name, p.attendant, p.phone_number, p.arena, p.question1, p.question2, p.question3, p.question4]
+      end
+    end
+
+    send_data csv_data, filename: "presence-#{Date.today}.csv"
   end
 
   private
