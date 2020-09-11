@@ -13,6 +13,8 @@
   <thead class="thead-dark">
     <tr>
       <th scope="col">Date</th>
+      <th scope="col">Heure de début</th>
+      <th scope="col">Heure de fin</th>
       <th scope="col">Nom joueur/benevole</th>
       <th scope="col">Accompagnateur</th>
       <th scope="col">Phone number</th>
@@ -27,7 +29,9 @@
   <tbody>
     <% @presences.each do |presence| %>
       <tr>
-        <td><%= I18n.l(presence.created_at.in_time_zone("America/New_York"),format: :long) %></td>
+        <td><%= I18n.l(presence.activity_date,format: :long) %></td>
+        <td><%= presence.start_hour %>:00</td>
+        <td><%= presence.end_hour %>:00</td>
         <td><%= presence.name %></td>
         <td><%= presence.attendant %></td>
         <td><%= presence.phone_number %></td>

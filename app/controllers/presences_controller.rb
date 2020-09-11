@@ -21,6 +21,10 @@ class PresencesController < ApplicationController
   # GET /presences/new
   def new
     @presence = Presence.new
+
+    @presence.start_hour = DateTime.now.hour
+    @presence.end_hour = @presence.start_hour + 1
+    @presence.end_hour = 1 if @presence.end_hour > 24
   end
 
   # GET /presences/1/edit
@@ -31,7 +35,7 @@ class PresencesController < ApplicationController
   # POST /presences.json
   def create
     @presence = Presence.new(presence_params)
-
+    @presence.activity_date = Date.today
     respond_to do |format|
       if @presence.save
         format.html { redirect_to confirmation_presences_url, notice: 'Presence was successfully created.' }
@@ -76,14 +80,14 @@ class PresencesController < ApplicationController
     end_date = DateTime.parse(date).end_of_day
     presences = Presence.where(:created_at => start_date..end_date)
     csv_data = CSV.generate(headers: true) do |csv|
-      csv << ["Date", "Nom joueur/benevole", "Accompagnateur", "Telephone", "Arena", "Question 1", "Question 2", "Question 3", "Question 4"]
+      csv << ["Date", "Heure de debut", "Heure de fin", "Nom joueur/benevole", "Accompagnateur", "Telephone", "Arena", "Question 1", "Question 2", "Question 3", "Question 4"]
 
       presences.each do |p|
-        csv << [I18n.l(p.created_at.in_time_zone("America/New_York"),format: :long), p.name, p.attendant, p.phone_number, p.arena, p.question1, p.question2, p.question3, p.question4]
+        csv << [p.activity_date, "#{p.start_hour}:00", "#{p.end_hour}:00", p.name, p.attendant, p.phone_number, p.arena, p.question1, p.question2, p.question3, p.question4]
       end
     end
 
-    send_data csv_data, filename: "presence-#{Date.today}.csv"
+    send_data csv_data, filename: "presence-#{date}.csv"
   end
 
   private
@@ -94,6 +98,6 @@ class PresencesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def presence_params
-      params.require(:presence).permit(:name, :attendant, :phone_number, :arena, :question1, :question2, :question3, :question4)
+      params.require(:presence).permit(:name, :attendant, :phone_number, :arena, :question1, :question2, :question3, :question4, :start_hour, :end_hour)
     end
 end

@@ -33,6 +33,16 @@
   </div>
 
   <div class="form-group">
+    <label for='arena'>Heure de début de l'activité <font color=red>*</font></label>
+    <%= form.select(:start_hour, 1..24, {}, { :class => 'form-control' })%>
+  </div>
+
+   <div class="form-group">
+    <label for='arena'>Heure de fin de l'activité <font color=red>*</font></label>
+    <%= form.select(:end_hour, 1..24, {}, { :class => 'form-control' })%>
+  </div>
+
+  <div class="form-group">
     <label for='question1'>1-PRÉSENTEZ-VOUS UN DES SYMPTÔMES SUIVANTS: <font color=red>*</font></label><br/>
     <small class="form-text text-muted">Fièvre ou frissons, Apparition ou aggravation de toux, Perte de l'odorat ou du goût, Maux de gorge ou voix enrouée, Essoufflement ou difficulté respiratoire, Symptômes gastro-intestinaux (douleur abdominale, diarrhée vomissements.</small>
     <%= form.select(:question1, ['','OUI', 'NON'], {}, { :class => 'form-control' })%>
