@@ -1,7 +1,14 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Presences</h1>
-
+<div>
+  <p>Exporter le jour <select id="exportDay">
+    <% @days.each do |day| %>
+      <option><%=day%></option>
+    <% end %>
+  </select> en excel <input type="button" id="exportButton" value="Telecharger" /></p>
+</div>
+<br/>
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
@@ -36,13 +43,7 @@
     <% end %>
   </tbody>
 </table>
-<div>
-  <p>Exporter le jour <select id="exportDay">
-    <% @days.each do |day| %>
-      <option><%=day%></option>
-    <% end %>
-  </select> en excel <input type="button" id="exportButton" value="Telecharger" /></p>
-</div>
+<div><%= will_paginate @presences %></div>
 <br>
 
 <%= link_to 'New Presence', new_presence_path %>

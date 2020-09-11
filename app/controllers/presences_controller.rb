@@ -7,7 +7,7 @@ class PresencesController < ApplicationController
   # GET /presences
   # GET /presences.json
   def index
-    @presences = Presence.all
+    @presences = Presence.page(params[:page]).order('created_at DESC')
     days = @presences.map {|i| i.created_at.to_date }
 
     @days = days.uniq
