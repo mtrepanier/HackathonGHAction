@@ -8,7 +8,7 @@ class AddStartHourEndHourToPresence < ActiveRecord::Migration[6.0]
 
     presences = Presence.all
     presences.each do |presence|
-      presence.start_hour = presence.created_at.hour
+      presence.start_hour = presence.created_at.in_time_zone("America/New_York").hour
       end_hour = presence.start_hour + 1
       end_hour = 1 if end_hour > 24
       presence.end_hour = end_hour

@@ -22,7 +22,7 @@ class PresencesController < ApplicationController
   def new
     @presence = Presence.new
 
-    @presence.start_hour = DateTime.now.hour
+    @presence.start_hour = DateTime.now.in_time_zone("America/New_York").hour
     @presence.end_hour = @presence.start_hour + 1
     @presence.end_hour = 1 if @presence.end_hour > 24
   end
