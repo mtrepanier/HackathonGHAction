@@ -34,12 +34,12 @@
 
   <div class="form-group">
     <label for='arena'>Heure de début de l'activité <font color=red>*</font></label>
-    <%= form.select(:start_hour, 1..24, {}, { :class => 'form-control' })%>
+    <%= form.select(:start_time, @presence_times, {}, { :class => 'form-control' })%>
   </div>
 
    <div class="form-group">
     <label for='arena'>Heure de fin de l'activité <font color=red>*</font></label>
-    <%= form.select(:end_hour, 1..24, {}, { :class => 'form-control' })%>
+    <%= form.select(:end_time, @presence_times, {}, { :class => 'form-control' })%>
   </div>
 
   <div class="form-group">

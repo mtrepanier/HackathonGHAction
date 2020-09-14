@@ -8,7 +8,7 @@ class PresencesController < ApplicationController
   # GET /presences.json
   def index
     @presences = Presence.page(params[:page]).order('created_at DESC')
-    days = @presences.map {|i| i.created_at.to_date }
+    days = Presence.all.map {|i| i.created_at.to_date }
 
     @days = days.uniq
   end
@@ -22,13 +22,20 @@ class PresencesController < ApplicationController
   def new
     @presence = Presence.new
 
-    @presence.start_hour = DateTime.now.in_time_zone("America/New_York").hour
-    @presence.end_hour = @presence.start_hour + 1
-    @presence.end_hour = 1 if @presence.end_hour > 24
+    time_zoned = Time.now.round_off(30.minutes).in_time_zone("America/New_York")
+    hour = time_zoned.hour
+    minutes = '%02d' % time_zoned.min
+    end_hour = hour + 1
+    end_hour = 1 if end_hour > 24
+    @presence.start_time = "#{hour}:#{minutes}"
+    @presence.end_time = "#{end_hour}:#{minutes}"
+
+    @presence_times = presence_times
   end
 
   # GET /presences/1/edit
   def edit
+    @presence_times = presence_times
   end
 
   # POST /presences
@@ -83,7 +90,7 @@ class PresencesController < ApplicationController
       csv << ["Date", "Heure de debut", "Heure de fin", "Nom joueur/benevole", "Accompagnateur", "Telephone", "Arena", "Question 1", "Question 2", "Question 3", "Question 4"]
 
       presences.each do |p|
-        csv << [p.activity_date, "#{p.start_hour}:00", "#{p.end_hour}:00", p.name, p.attendant, p.phone_number, p.arena, p.question1, p.question2, p.question3, p.question4]
+        csv << [p.activity_date, p.start_time, p.end_time, p.name, p.attendant, p.phone_number, p.arena, p.question1, p.question2, p.question3, p.question4]
       end
     end
 
@@ -98,6 +105,15 @@ class PresencesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def presence_params
-      params.require(:presence).permit(:name, :attendant, :phone_number, :arena, :question1, :question2, :question3, :question4, :start_hour, :end_hour)
+      params.require(:presence).permit(:name, :attendant, :phone_number, :arena, :question1, :question2, :question3, :question4, :start_time, :end_time)
+    end
+
+    def presence_times
+      p_times = []
+      (1..24).each do |hour|
+        p_times << "#{hour}:00"
+        p_times << "#{hour}:30"
+      end
+      p_times
     end
 end

@@ -30,8 +30,8 @@
     <% @presences.each do |presence| %>
       <tr>
         <td><%= I18n.l(presence.activity_date,format: :long) %></td>
-        <td><%= presence.start_hour %>:00</td>
-        <td><%= presence.end_hour %>:00</td>
+        <td><%= presence.start_time %></td>
+        <td><%= presence.end_time %></td>
         <td><%= presence.name %></td>
         <td><%= presence.attendant %></td>
         <td><%= presence.phone_number %></td>
