@@ -45,23 +45,43 @@
   <div class="form-group">
     <label for='question1'>1-PRÉSENTEZ-VOUS UN DES SYMPTÔMES SUIVANTS: <font color=red>*</font></label><br/>
     <small class="form-text text-muted">Fièvre ou frissons, Apparition ou aggravation de toux, Perte de l'odorat ou du goût, Maux de gorge ou voix enrouée, Essoufflement ou difficulté respiratoire, Symptômes gastro-intestinaux (douleur abdominale, diarrhée vomissements.</small>
-    <%= form.select(:question1, ['','OUI', 'NON'], {}, { :class => 'form-control' })%>
+    <div class="field">
+      <%= form.label :question1, "OUI", :value => "OUI"  %>
+      <%= form.radio_button :question1, 'OUI' %>
+      <%= form.label :question1, "NON", :value => "NON" %>
+      <%= form.radio_button :question1, 'NON', :checked => true %>
+    </div>
   </div>
 
   <div class="form-group">
     <label for='question2'>2-PRÉSENTEZ -VOUS DEUX (OU PLUS) DES SYMPTÔMES SUIVANTS: <font color=red>*</font></label><br/>
     <small class="form-text text-muted">Écoulements nasaux, Douleurs musculaires ou courbatures, Fatigue intense, Conjonctivite, Maux de tête, Nausée, perte d’appétit.</small>
-    <%= form.select(:question2, ['','OUI', 'NON'], {}, { :class => 'form-control' })%>
+    <div class="field">
+      <%= form.label :question2, "OUI", :value => "OUI"  %>
+      <%= form.radio_button :question2, 'OUI' %>
+      <%= form.label :question2, "NON", :value => "NON" %>
+      <%= form.radio_button :question2, 'NON', :checked => true %>
+    </div>
   </div>
 
   <div class="form-group">
     <label for='question3'>3-AVEZ-VOUS VOYAGÉ À L’ÉTRANGER (Y COMPRIS AUX ÉTATS-UNIS) OU EU UN CONTACT AVEC UNE PERSONNE QUI A VOYAGÉ AU COURS DES 14 DERNIERS JOURS? <font color=red>*</font></label>
-    <%= form.select(:question3, ['','OUI', 'NON'], {}, { :class => 'form-control' })%>
+    <div class="field">
+      <%= form.label :question3, "OUI", :value => "OUI"  %>
+      <%= form.radio_button :question3, 'OUI' %>
+      <%= form.label :question3, "NON", :value => "NON" %>
+      <%= form.radio_button :question3, 'NON', :checked => true %>
+    </div>
   </div>
 
   <div class="form-group">
     <label for='question4'>4-AU COURS DES 14 DERNIERS JOURS, AVEZ-VOUS FOURNI DES SOINS OU EU UN CONTACT AVEC UN CAS SYMPTOMATIQUE CONFIRMÉ OU SUSPECTÉ (EN ATTENTE D’UN RÉSULTAT) DE LA COVID-19? <font color=red>*</font></label>
-    <%= form.select(:question4, ['','OUI', 'NON'], {}, { :class => 'form-control' })%>
+    <div class="field">
+      <%= form.label :question4, "OUI", :value => "OUI"  %>
+      <%= form.radio_button :question4, 'OUI' %>
+      <%= form.label :question4, "NON", :value => "NON" %>
+      <%= form.radio_button :question4, 'NON', :checked => true %>
+    </div>
   </div>
   <p>SI VOUS RÉPONDEZ OUI À L’UNE DE CES QUESTIONS, VEUILLEZ PAR MESURE PRÉVENTIVE:</p>
   <ul>
