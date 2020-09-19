@@ -6,6 +6,10 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+Raven.configure do |config|
+  config.dsn = 'https://cac9153da0e4476893d0d340eff892db@o335202.ingest.sentry.io/5434653'
+end
+
 module AhmldmCovid
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
