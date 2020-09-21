@@ -1,3 +1,4 @@
+<div style="padding-left: 10%; padding-right: 10%;">
 <%= form_with(model: presence, local: true) do |form| %>
   <% if presence.errors.any? %>
     <div id="error_explanation" class='invalid-feedback d-block'>
@@ -94,3 +95,4 @@
     <%= form.submit "Confirmer ma presence", :class => "btn btn-primary" %>
   </div>
 <% end %>
+</div>
