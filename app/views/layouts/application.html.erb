@@ -9,10 +9,15 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body class="text-center">
+  <body class="text-center" style="background-color: #011B4C;">
     <div class="container">
-      <img src="/images/logo.png" class="img-fluid w-50"/>
-      <%= yield %>
+      <div class="row">
+        <div class="col-sm" style="background-color: #F0F0F0; padding: 10%; margin-top:10%;">
+          <img src="/images/logo.png" class="img-fluid w-50"/>
+          <%= yield %>
+        </div>
+      </div>
     </div>
   </body>
 </html>
+  

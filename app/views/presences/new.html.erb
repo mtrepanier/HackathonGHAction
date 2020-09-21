@@ -5,7 +5,7 @@
   $( document ).ready(function() {
     // returns '#input' for 'https://www.techiedelight.com/#input'
     var hash = $(location).prop('hash').substring(1);;
-    if ($("#presence_arena option[value="+hash+"]").length > 0) {
+    if (hash !== "" && $("#presence_arena option[value="+hash+"]").length > 0) {
       $("#presence_arena").val(hash);
     }
   });
