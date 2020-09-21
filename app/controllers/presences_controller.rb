@@ -7,7 +7,7 @@ class PresencesController < ApplicationController
   # GET /presences
   # GET /presences.json
   def index
-    @presences = Presence.page(params[:page]).order('created_at DESC')
+    @presences = Presence.page(params[:page]).order("activity_date DESC").order("REPLACE(start_time, ':', '')::int DESC")
     days = Presence.all.map {|i| i.created_at.to_date }
 
     @days = days.uniq
@@ -83,9 +83,10 @@ class PresencesController < ApplicationController
 
   def export
     date = params[:selectdate]
+    arena = params[:arena]
     start_date = DateTime.parse(date).beginning_of_day
     end_date = DateTime.parse(date).end_of_day
-    presences = Presence.where(:created_at => start_date..end_date)
+    presences = Presence.where(:created_at => start_date..end_date, :arena => arena)
     csv_data = CSV.generate(headers: true) do |csv|
       csv << ["Date", "Heure de debut", "Heure de fin", "Nom joueur/benevole", "Accompagnateur", "Telephone", "Arena", "Question 1", "Question 2", "Question 3", "Question 4"]
 

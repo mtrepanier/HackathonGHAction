@@ -6,7 +6,13 @@
     <% @days.each do |day| %>
       <option><%=day%></option>
     <% end %>
-  </select> en excel <input type="button" id="exportButton" value="Telecharger" /></p>
+  </select> 
+  pour l'arena <select id="exportArena">
+    <option>Olympia</option>
+    <option>ComplexeAP</option>
+  </select> en excel
+  <input type="button" id="exportButton" value="Telecharger" /></p>
+
 </div>
 <br/>
 <table class="table table-striped">
@@ -54,6 +60,7 @@
 <script type="text/javascript">
     document.getElementById("exportButton").onclick = function () {
       query = document.getElementById("exportDay").value;
-      location.href = "/presences/export?selectdate=" + query;
+      arena = document.getElementById("exportArena").value;
+      location.href = "/presences/export?selectdate=" + query + "&arena=" + arena;
     };
 </script>
