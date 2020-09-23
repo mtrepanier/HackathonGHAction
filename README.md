@@ -21,4 +21,6 @@ Things you may want to cover:
 
 * Deployment instructions
 
+** Deploy automatically to Heroku after push to master
+
 * ...
