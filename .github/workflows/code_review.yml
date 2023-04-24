@@ -25,7 +25,9 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GPT_API_KEY: ${{ secrets.GPT_API_KEY }}
-    run: |
-      bundle exec ruby ./.github/workflows/scripts/code_review.rb $GITHUB_TOKEN ${{ github.event.repository.full_name }} ${{ github.event.pull_request.number }} $CHAT_GPT_API_KEY
-    shell: bash
-    working-directory: .
+    steps:
+      - name: Run code review
+      - run: |
+        bundle exec ruby ./.github/workflows/scripts/code_review.rb $GITHUB_TOKEN ${{ github.event.repository.full_name }} ${{ github.event.pull_request.number }} $CHAT_GPT_API_KEY
+      - shell: bash
+      - working-directory: .
