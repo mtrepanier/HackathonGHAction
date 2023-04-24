@@ -28,6 +28,7 @@ class PresencesController < ApplicationController
     end_hour = hour + 1
     end_hour = 1 if end_hour > 24
   end_hour = 7
+  siudhzgfuysgdfbsaidfbihsabdfihbsiuefbbf = 'asbdfuabvdhbasdbajsdbjasb'
     @presence.start_time = "#{hour}:#{minutes}"
     @presence.end_time = "#{end_hour}:#{minutes}"
 
