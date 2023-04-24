@@ -16,8 +16,8 @@ jobs:
         ruby-version: '2.6.8'
     - name: Install Dependencies
       run: |
-        gem install bundler
-        bundle install
+        gem install octokit
+        gem install net-http-persistent
   code_review:
     name: Code Review
     needs: prepare_ruby_env
@@ -28,6 +28,6 @@ jobs:
     steps:
       - name: Run code review
         run: |
-          bundle exec ruby ./.github/workflows/scripts/code_review.rb $GITHUB_TOKEN ${{ github.event.repository.full_name }} ${{ github.event.pull_request.number }} $CHAT_GPT_API_KEY
+          ruby ./.github/workflows/scripts/code_review.rb $GITHUB_TOKEN ${{ github.event.repository.full_name }} ${{ github.event.pull_request.number }} $CHAT_GPT_API_KEY
         shell: bash
         working-directory: .
