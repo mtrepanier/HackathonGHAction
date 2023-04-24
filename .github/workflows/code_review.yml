@@ -7,15 +7,18 @@ jobs:
     name: Prepare Ruby Env
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: '2.7.0'
-    - name: Install Dependencies
-      run: |
-        gem install octokit
-        gem install net-http-persistent
+      - name: Codebase Checkout
+        uses: actions/checkout@v3
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1.118.0
+        with:
+          ruby-version: '2.7.0'
+          bundler-cache: true
+          cache-version: 1
+      - name: Install Dependencies
+        run: |
+          gem install octokit
+          gem install net-http-persistent
   code_review:
     name: Code Review
     needs: prepare_ruby_env
