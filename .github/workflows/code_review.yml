@@ -1,8 +1,6 @@
 name: Code Review Action
 
-on: 
-  pull_request:
-    types: [opened, edited, reopened]
+on: [pull_request]
 
 jobs:
   prepare_ruby_env:
