@@ -42,7 +42,7 @@ class CodeGenerateUnit
   end
 
   def generate_code_unit_test(file_contents)
-    content = "Can you generate unit test using active_support for the following code and encapsulate the code into a ruby block code for a github comment:\n\n #{file_contents}"
+    content = "Can you generate unit test using active_support for the following code for a github comment:\n\n #{file_contents}"
     uri = URI.parse('https://api.openai.com/v1/chat/completions')
     request = Net::HTTP::Post.new(uri)
     request['Authorization'] = "Bearer #{@chat_gpt_api_key}"
