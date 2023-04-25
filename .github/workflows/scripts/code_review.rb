@@ -28,7 +28,7 @@ class CodeReview
       code_review_comments << {comment: code_review, file_name: file.filename}
     end
 
-    create_review_comments(code_review_comments)
+    create_review_comments(code_review_comments, pull_request.head.sha)
   end
 
   private
@@ -51,13 +51,32 @@ class CodeReview
     JSON.parse(response.body)['choices'][0]['message']["content"]
   end
 
-  def create_review_comments(code_review_comments)
+  def create_review_comments(code_review_comments, commit_sha)
     comments = []
     code_review_comments.each do |code_review_comment|
-      comments << {path: code_review_comment[:file_name], position: 1, body: code_review_comment[:comment]}
+      comments << {path: code_review_comment[:file_name], position: 1000, body: code_review_comment[:comment]}
     end
-    options = {event: 'COMMENT', body: "This is close to perfect! Please address the suggested inline change proposed by the ForbiddenFruit.", comments: comments}
-    @client.create_pull_request_review(@repository, @pull_request_number, options)
+
+    uri = URI.parse("https://api.github.com/repos/#{@repository}/pulls/#{@pull_request_number}/reviews")
+    request = Net::HTTP::Post.new(uri)
+    request['Authorization'] = "Bearer #{@github_token}"
+    request['Content-Type'] = 'application/json'
+    request.body = {
+      commit_id: commit_sha,
+      body: "This is close to perfect! Please address the suggested inline change proposed by the ForbiddenFruit.",
+      event: 'COMMENT',
+      comments: comments
+    }.to_json
+    http = Net::HTTP.new(uri.hostname, uri.port)
+    http.use_ssl = true
+    response = http.request(request)
+
+    # comments = []
+    # code_review_comments.each do |code_review_comment|
+    #   comments << {path: code_review_comment[:file_name], position: 1, body: code_review_comment[:comment]}
+    # end
+    # options = {event: 'COMMENT', body: "This is close to perfect! Please address the suggested inline change proposed by the ForbiddenFruit.", comments: comments}
+    # @client.create_pull_request_review(@repository, @pull_request_number, options)
   end
 end
 
