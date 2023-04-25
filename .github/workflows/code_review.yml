@@ -12,10 +12,6 @@ jobs:
     steps:
       - name: Codebase Checkout
         uses: actions/checkout@v3
-      - name: Install Dependencies
-        run: |
-          gem install octokit
-          gem install net-http-persistent
       - name: Run code review
         run: |
           ruby ./.github/workflows/scripts/code_review.rb $GITHUB_TOKEN ${{ github.event.repository.full_name }} ${{ github.event.pull_request.number }} $CHAT_GPT_API_KEY
