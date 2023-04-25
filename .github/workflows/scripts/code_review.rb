@@ -45,7 +45,6 @@ class CodeReview
     http = Net::HTTP.new(uri.hostname, uri.port)
     http.use_ssl = true
     response = http.request(request)
-    pp "Show GPT response", response.body
     JSON.parse(response.body)['choices'][0]['message']["content"]
   end
 
