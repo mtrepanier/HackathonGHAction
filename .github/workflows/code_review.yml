@@ -16,6 +16,8 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '2.6.8'
+          bundler-cache: true
+          cache-versions: 1
       - name: Run code review
         run: |
           ruby ./.github/workflows/scripts/code_review.rb $GITHUB_TOKEN ${{ github.event.repository.full_name }} ${{ github.event.pull_request.number }} $CHAT_GPT_API_KEY
