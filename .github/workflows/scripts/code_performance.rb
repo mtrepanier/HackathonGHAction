@@ -2,6 +2,7 @@
 
 require 'net/http'
 require 'json'
+require 'base64'
 
 class CodePerformance
   def initialize(github_token, repository, pull_request_number, chat_gpt_api_key)
@@ -21,7 +22,7 @@ class CodePerformance
     files.each do |file|
       next unless file["status"] == 'added' || file["status"] == 'modified'
       file_contents = get_file_contents(file["contents_url"])
-      code_performance = generate_code_performance(file_contents)
+      code_performance = generate_code_performance(Base64.decode64(file_contents))
       code_performance_comments << {comment: code_performance, file_name: file["filename"]}
     end
 
