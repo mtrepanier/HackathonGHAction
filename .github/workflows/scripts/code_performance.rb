@@ -44,7 +44,7 @@ class CodePerformance
   def generate_code_performance(file_contents)
     content = "Can you generate change to this code to optimize performance the following code:\n\n #{file_contents}"
     uri = URI.parse('https://api.openai.com/v1/chat/completions')
-    request = Net::HTTP::Post.new(uri)
+    request = Net::HTTP::Post.new(uri, read_timeout: 500)
     request['Authorization'] = "Bearer #{@chat_gpt_api_key}"
     request['Content-Type'] = 'application/json'
     request.body = {
@@ -54,7 +54,7 @@ class CodePerformance
       n: 1,
       stop: ['\n']
     }.to_json
-    http = Net::HTTP.new(uri.hostname, uri.port, :read_timeout => 500)
+    http = Net::HTTP.new(uri.hostname, uri.port)
     http.use_ssl = true
     response = http.request(request)
     pp "Generated code performance:", response.body
