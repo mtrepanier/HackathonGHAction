@@ -30,13 +30,14 @@ class CodeReview
   private
 
   def generate_code_review(patch)
+    content = "Can you do a code review the following code:\n\n #{patch}"
     uri = URI.parse('https://api.openai.com/v1/chat/completions')
     request = Net::HTTP::Post.new(uri)
     request['Authorization'] = "Bearer #{@chat_gpt_api_key}"
     request['Content-Type'] = 'application/json'
     request.body = {
       model: "gpt-3.5-turbo",
-      messages: [{"role": "user", "content": "Can you do a code review the following code:\n\n #{patch}"}],
+      messages: [{"role": "user", "content": content}],
       temperature: 0.5,
       n: 1,
       stop: ['\n']
@@ -44,6 +45,7 @@ class CodeReview
     http = Net::HTTP.new(uri.hostname, uri.port)
     http.use_ssl = true
     response = http.request(request)
+    pp "Show GPT response", response.body
     JSON.parse(response.body)['choices'][0]['message']["content"]
   end
 
