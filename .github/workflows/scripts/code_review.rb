@@ -40,7 +40,7 @@ class CodeReview
     request['Content-Type'] = 'application/json'
     request.body = {
       model: "gpt-3.5-turbo",
-      messages: [{"role": "user", "content": "Can you do a code review the following code:\n\n #{patch}"}]
+      messages: [{"role": "user", "content": "Can you do a code review the following code:\n\n #{patch}"}],
       temperature: 0.5,
       n: 1,
       stop: ['\n']
