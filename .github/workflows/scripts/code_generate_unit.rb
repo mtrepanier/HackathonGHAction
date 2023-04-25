@@ -56,6 +56,7 @@ class CodeGenerateUnit
     }.to_json
 
     response = Net::HTTP.start(uri.hostname, uri.port, :read_timeout => 500, :use_ssl => true) {|http| http.request(request)}
+    pp "Show code unit test received", response.body
     JSON.parse(response.body)['choices'][0]['message']["content"]
   end
 

@@ -42,9 +42,9 @@ class CodeReview
       n: 1,
       stop: ['\n']
     }.to_json
-    http = Net::HTTP.new(uri.hostname, uri.port)
-    http.use_ssl = true
-    response = http.request(request)
+
+    response = Net::HTTP.start(uri.hostname, uri.port, :read_timeout => 500, :use_ssl => true) {|http| http.request(request)}
+    pp "Show code review received", response.body
     JSON.parse(response.body)['choices'][0]['message']["content"]
   end
 
