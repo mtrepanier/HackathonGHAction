@@ -26,7 +26,7 @@ class CodeGenerateUnit
       code_unit_test_comments << {comment: code_unit_test, file_name: file["filename"]}
     end
     
-    create_review_comments(code_performance_comments, pull_request["head"]["sha"]) unless code_unit_test_comments.empty?
+    create_review_comments(code_unit_test_comments, pull_request["head"]["sha"]) unless code_unit_test_comments.empty?
   end
 
   private
