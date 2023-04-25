@@ -4,7 +4,7 @@ require 'net/http'
 require 'json'
 require 'base64'
 
-class CodePerformance
+class CodeGenerateUnit
   def initialize(github_token, repository, pull_request_number, chat_gpt_api_key)
     @github_token = github_token
     @repository = repository
@@ -17,16 +17,16 @@ class CodePerformance
     pull_request = get_pull_resquest
     # Get the list of files in the pull request
     files = get_pull_request_files
-    code_performance_comments = []
+    code_unit_test_comments = []
     # For each file, get its contents and generate a code review
     files.each do |file|
-      next unless file["status"] == 'added' || file["status"] == 'modified'
+      next unless file["status"] == 'added' && !file["filename"].include? '_test'
       file_contents = get_file_contents(file["contents_url"])
-      code_performance = generate_code_performance(Base64.decode64(file_contents))
-      code_performance_comments << {comment: code_performance, file_name: file["filename"]}
+      code_unit_test = generate_code_unit_test(Base64.decode64(file_contents))
+      code_unit_test_comments << {comment: code_unit_test, file_name: file["filename"]}
     end
-
-    create_review_comments(code_performance_comments, pull_request["head"]["sha"])
+    
+    create_review_comments(code_performance_comments, pull_request["head"]["sha"]) unless code_unit_test_comments.empty?
   end
 
   private
@@ -41,8 +41,8 @@ class CodePerformance
     JSON.parse(response.body)['content']
   end
 
-  def generate_code_performance(file_contents)
-    content = "Can you generate change to this code to optimize performance the following code:\n\n #{file_contents}"
+  def generate_code_unit_test(file_contents)
+    content = "Can you generate unit test using active_support for the following code:\n\n #{file_contents}"
     uri = URI.parse('https://api.openai.com/v1/chat/completions')
     request = Net::HTTP::Post.new(uri)
     request['Authorization'] = "Bearer #{@chat_gpt_api_key}"
@@ -51,8 +51,8 @@ class CodePerformance
       model: "gpt-3.5-turbo",
       messages: [{"role": "user", "content": content}],
       temperature: 0.5,
-      max_tokens: 2048,
       n: 1,
+      max_tokens: 2048,
       stop: ['\n']
     }.to_json
 
@@ -67,7 +67,7 @@ class CodePerformance
     request['Content-Type'] = 'application/json'
     request.body = {
       commit_id: commit_sha,
-      body: "This is code sugestion to optimize performance proposed by the ForbiddenFruit.",
+      body: "This is unit test sugestion to for this file proposed by the ForbiddenFruit.",
       event: 'COMMENT',
       comments: code_review_comments.map { |c| { path: c[:file_name], position: 1, body: c[:comment] } }
     }.to_json
@@ -104,5 +104,5 @@ repository = ARGV[1]
 pull_request_number = ARGV[2].to_i
 api_key = ARGV[3]
 
-code_performance = CodePerformance.new(github_token, repository, pull_request_number, api_key)
+code_performance = CodeGenerateUnit.new(github_token, repository, pull_request_number, api_key)
 code_performance.run
