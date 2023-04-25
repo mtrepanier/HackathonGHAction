@@ -1,0 +1,25 @@
+name: Code Performance Optimisation
+
+on: [pull_request]
+
+jobs:
+  code_review:
+    name: Code Performance Optimisation
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GPT_API_KEY: ${{ secrets.GPT_API_KEY }}
+    steps:
+      - name: Codebase Checkout
+        uses: actions/checkout@v3
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7.0'
+          bundler-cache: true
+          cache-version: 1
+      - name: Run code performance optimisation
+        run: |
+          ruby ./.github/workflows/scripts/code_performance.rb $GITHUB_TOKEN ${{ github.event.repository.full_name }} ${{ github.event.pull_request.number }} $GPT_API_KEY
+        shell: bash
+        working-directory: .
