@@ -3,25 +3,8 @@ name: Code Review Action
 on: [pull_request]
 
 jobs:
-  prepare_ruby_env:
-    name: Prepare Ruby Env
-    runs-on: ubuntu-latest
-    steps:
-      - name: Codebase Checkout
-        uses: actions/checkout@v3
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1.118.0
-        with:
-          ruby-version: '2.7.0'
-          bundler-cache: true
-          cache-version: 1
-      - name: Install Dependencies
-        run: |
-          gem install octokit
-          gem install net-http-persistent
   code_review:
     name: Code Review
-    needs: prepare_ruby_env
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -29,6 +12,10 @@ jobs:
     steps:
       - name: Codebase Checkout
         uses: actions/checkout@v3
+      - name: Install Dependencies
+        run: |
+          gem install octokit
+          gem install net-http-persistent
       - name: Run code review
         run: |
           ruby ./.github/workflows/scripts/code_review.rb $GITHUB_TOKEN ${{ github.event.repository.full_name }} ${{ github.event.pull_request.number }} $CHAT_GPT_API_KEY
