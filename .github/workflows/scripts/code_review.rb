@@ -39,8 +39,7 @@ class CodeReview
       model: "gpt-3.5-turbo",
       messages: [{"role": "user", "content": content}],
       temperature: 0.5,
-      n: 1,
-      stop: ['\n']
+      n: 1
     }.to_json
 
     response = Net::HTTP.start(uri.hostname, uri.port, :read_timeout => 500, :use_ssl => true) {|http| http.request(request)}
