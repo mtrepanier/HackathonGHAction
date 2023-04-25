@@ -54,7 +54,7 @@ class CodePerformance
       n: 1,
       stop: ['\n']
     }.to_json
-    http = Net::HTTP.new(uri.hostname, uri.port)
+    http = Net::HTTP.new(uri.hostname, uri.port, :read_timeout => 500)
     http.use_ssl = true
     response = http.request(request)
     pp "Generated code performance:", response.body
