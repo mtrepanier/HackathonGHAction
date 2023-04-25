@@ -52,7 +52,6 @@ class CodeGenerateUnit
       messages: [{"role": "user", "content": content}],
       temperature: 0.5,
       n: 1,
-      max_tokens: 2048,
       stop: ['\n']
     }.to_json
 

@@ -51,7 +51,6 @@ class CodePerformance
       model: "gpt-3.5-turbo",
       messages: [{"role": "user", "content": content}],
       temperature: 0.5,
-      max_tokens: 2048,
       n: 1,
       stop: ['\n']
     }.to_json
