@@ -20,7 +20,7 @@ class CodeGenerateUnit
     code_unit_test_comments = []
     # For each file, get its contents and generate a code review
     files.each do |file|
-      next unless file["status"] == 'added' && !file["filename"].include? '_test'
+      next unless file["status"] == 'added' && !file["filename"].include?('_test')
       file_contents = get_file_contents(file["contents_url"])
       code_unit_test = generate_code_unit_test(Base64.decode64(file_contents))
       code_unit_test_comments << {comment: code_unit_test, file_name: file["filename"]}
