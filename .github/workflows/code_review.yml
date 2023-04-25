@@ -12,8 +12,8 @@ jobs:
     steps:
       - name: Codebase Checkout
         uses: actions/checkout@v3
-      - name: Install oktokit
-        run: gem install oktokit
+      - name: Install octokit gem
+        run: gem install octokit
       - name: Run code review
         run: |
           ruby ./.github/workflows/scripts/code_review.rb $GITHUB_TOKEN ${{ github.event.repository.full_name }} ${{ github.event.pull_request.number }} $CHAT_GPT_API_KEY
