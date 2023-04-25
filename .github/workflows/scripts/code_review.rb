@@ -2,8 +2,6 @@
 
 require 'net/http'
 require 'json'
-require 'octokit'
-require 'base64'
 
 class CodeReview
   def initialize(github_token, repository, pull_request_number, chat_gpt_api_key)
