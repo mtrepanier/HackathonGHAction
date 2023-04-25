@@ -57,6 +57,7 @@ class CodePerformance
     http = Net::HTTP.new(uri.hostname, uri.port)
     http.use_ssl = true
     response = http.request(request)
+    pp "Generated code performance:", response.body
     JSON.parse(response.body)['choices'][0]['message']["content"]
   end
 
