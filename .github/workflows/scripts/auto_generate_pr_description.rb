@@ -25,7 +25,7 @@ class AutoGeneratePrDescription
       pr_code_contents << {content: file_contents, file_name: file["filename"]}
     end
     pr_description = generate_pr_description(pr_code_contents) unless pr_code_contents.empty?
-    
+    create_pr_description(pr_description)
   end
 
   private
