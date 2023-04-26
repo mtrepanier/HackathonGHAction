@@ -25,9 +25,8 @@ class AutoGeneratePrDescription
       file_contents = get_file_contents(file["contents_url"])
       pr_code_contents << {content: file_contents, file_name: file["filename"]}
     end
-    pp "Show me pull request", pull_request
-    pp "Show me match", pull_request["title"].match(/\[(?<jira_id>[A-Z]+-\d+)\]/)
-    jira_ticket_id = pull_request["title"].match(/\[(?<jira_id>[A-Z]+-\d+)\]/)[:jira_id]
+    
+    jira_ticket_id = pull_request["title"].match(/\[(?<jira_id>[\w]+-\d+)\]/)[:jira_id]
     jira_ticket_desc = get_jira_issue_description(jira_ticket_id)
     pr_description = generate_pr_description(jira_ticket_desc, pr_code_contents) unless pr_code_contents.empty?
     create_pr_description(pr_description)
