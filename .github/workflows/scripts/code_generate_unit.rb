@@ -42,7 +42,7 @@ class CodeGenerateUnit
   end
 
   def generate_code_unit_test(file_contents)
-    content = "Can you generate unit test using active_support for the following code:\n\n #{file_contents}"
+    content = "Can you propose me a unit test using active_support and not rspec for this ruby code?:\n\n #{file_contents}"
     uri = URI.parse('https://api.openai.com/v1/chat/completions')
     request = Net::HTTP::Post.new(uri)
     request['Authorization'] = "Bearer #{@chat_gpt_api_key}"
@@ -51,11 +51,11 @@ class CodeGenerateUnit
       model: "gpt-3.5-turbo",
       messages: [{"role": "user", "content": content}],
       temperature: 0.5,
-      n: 1,
-      stop: ['\n']
+      n: 1
     }.to_json
 
     response = Net::HTTP.start(uri.hostname, uri.port, :read_timeout => 500, :use_ssl => true) {|http| http.request(request)}
+    pp "Show code unit test received", response.body
     JSON.parse(response.body)['choices'][0]['message']["content"]
   end
 
