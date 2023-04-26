@@ -45,7 +45,7 @@ class AutoGeneratePrDescription
   end
 
   def get_jira_issue_description(jira_ticket_id)
-    return "" if jira_ticket_id.blank?
+    return "" unless jira_ticket_id
 
     uri = URI.parse("https://mtrepanier.atlassian.net/rest/api/2/issue/#{jira_ticket_id}?fields=description")
     request = Net::HTTP::Get.new(uri)
@@ -65,7 +65,7 @@ class AutoGeneratePrDescription
       content = "#{content}\n```\n #{pr_code_content[:content]}\n```"
     end
 
-    content = "#{content}\n\nand that was implemented based on the this jira issue description:\n\n#{jira_ticket_desc}" unless jira_ticket_desc.blank?
+    content = "#{content}\n\nand that was implemented based on the this jira issue description:\n\n#{jira_ticket_desc}" unless jira_ticket_desc
 
     uri = URI.parse('https://api.openai.com/v1/chat/completions')
     request = Net::HTTP::Post.new(uri)
