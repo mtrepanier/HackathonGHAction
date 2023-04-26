@@ -43,7 +43,7 @@ class AutoGeneratePrDescription
   def generate_pr_description(pr_code_contents)
     content = "Can you generate a GitHub pull request description for a pull request that contain this code?:"
 
-    pr_code_contents.each_with_index do |pr_code_content, index| do
+    pr_code_contents.each_with_index do |pr_code_content, index|
       content = "#{content}\n\nAnd this block of code:" if index > 0
       content = "#{content}\n\n #{pr_code_content[:content]}"
     end
