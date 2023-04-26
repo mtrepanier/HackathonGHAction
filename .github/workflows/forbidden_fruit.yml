@@ -66,6 +66,7 @@ jobs:
   generate_pr_description:
     name: Generate PR Description
     runs-on: ubuntu-latest
+    if: github.event.pull_request.body == ''
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GPT_API_KEY: ${{ secrets.GPT_API_KEY }}
